@@ -1,0 +1,13 @@
+on: [push, pull_request]
+jobs:
+  gradle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: ls
+      - run: pwd
+      - run: sudo docker run --rm -u root -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:7.2.0-jdk16 gradle build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: MagicCrystal
+          path: build/libs/*
